@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday</title>
+<style>
+body { margin:0; overflow:hidden; background:black; font-family:Arial,sans-serif; }
+#main-message { position:absolute; font-size:3rem; font-weight:bold; white-space:nowrap; animation: colorShift 2s infinite alternate; z-index:10; }
+@keyframes colorShift { 0%{color:#ff6ec7}25%{color:#ffd93d}50%{color:#6bcfff}75%{color:#8cff6b}100%{color:#ff6b6b} }
+#scroll-message { position:fixed; bottom:40px; font-size:1.5rem; white-space:nowrap; color:white; animation: scrollText 15s linear infinite; }
+@keyframes scrollText { from{left:100%} to{left:-100%} }
+.sparkle { position:absolute; width:6px; height:6px; border-radius:50%; pointer-events:none; animation:sparkleFade 0.8s linear forwards; }
+@keyframes sparkleFade { from{opacity:1; transform:scale(1);} to{opacity:0; transform:scale(0);} }
+.confetti { position:absolute; width:8px; height:12px; animation:fall linear forwards; }
+@keyframes fall { to { transform:translateY(110vh) rotate(360deg); opacity:0; } }
+</style>
+</head>
+<body>
+
+<div id="main-message">Happy Birthday my lil pistachio 💚</div>
+<div id="scroll-message">I hope your day is as special and sweet as you are ✨</div>
+
+<script>
+const message=document.getElementById("main-message");
+let x=100, y=100, dx=3, dy=3;
+function bounce(){const width=window.innerWidth,height=window.innerHeight,rect=message.getBoundingClientRect();x+=dx;y+=dy;if(x+rect.width>=width||x<=0)dx*=-1;if(y+rect.height>=height||y<=0)dy*=-1;message.style.left=x+"px";message.style.top=y+"px";createSparkle(x+rect.width/2,y+rect.height/2);requestAnimationFrame(bounce);}
+function createSparkle(x,y){const s=document.createElement("div");s.className="sparkle";s.style.left=x+(Math.random()*20-10)+"px";s.style.top=y+(Math.random()*20-10)+"px";s.style.background=`hsl(${Math.random()*360},100%,80%)`;document.body.appendChild(s);setTimeout(()=>s.remove(),800);}
+function createConfetti(){const c=document.createElement("div");c.className="confetti";c.style.left=Math.random()*window.innerWidth+"px";c.style.top="-20px";c.style.background=`hsl(${Math.random()*360},100%,60%)`;c.style.animationDuration=(Math.random()*3+2)+"s";document.body.appendChild(c);setTimeout(()=>c.remove(),5000);}
+setInterval(createConfetti,150);bounce();
+</script>
+
+</body>
+</html>
